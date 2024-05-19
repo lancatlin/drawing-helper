@@ -2,7 +2,7 @@ export default function ImageSelector() {
   return (
     <div className="flex flex-row gap-3 items-center">
       <label htmlFor="image" className="">
-        Upload Image
+        Open Image
       </label>
       <input
         id="image"
