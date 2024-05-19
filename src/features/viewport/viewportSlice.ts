@@ -12,11 +12,11 @@ const viewportSlice = createSlice({
     setScale: (state, action: { payload: number }) => {
       state.scale = action.payload;
     },
-    zoomIn: (state) => {
-      state.scale = Math.min(10, state.scale * 1.1);
+    zoomIn: (state, action: { payload: number }) => {
+      state.scale = Math.min(10, state.scale * (1 - action.payload / 500));
     },
-    zoomOut: (state) => {
-      state.scale = Math.max(1, state.scale * 0.9);
+    zoomOut: (state, action: { payload: number }) => {
+      state.scale = Math.max(1, state.scale * (1 - action.payload / 500));
     },
     setX: (state, action: { payload: number }) => {
       state.x = action.payload;

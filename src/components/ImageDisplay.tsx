@@ -13,9 +13,9 @@ export default function ImageDisplay() {
 
   const handleWheel = (e: React.WheelEvent) => {
     if (e.deltaY < 0) {
-      dispatch(zoomIn());
+      dispatch(zoomIn(e.deltaY));
     } else {
-      dispatch(zoomOut());
+      dispatch(zoomOut(e.deltaY));
     }
   };
   return (
