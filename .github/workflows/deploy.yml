@@ -37,14 +37,14 @@ jobs:
           node-version: 20
       - name: Install dependencies
         run: yarn
-      - name: Build
-        run: yarn build --base ${{ steps.deployment.outputs.page_url }}
       - name: Setup Pages
+        id: pages
         uses: actions/configure-pages@v5
+      - name: Build
+        run: yarn build --base ${{ steps.pages.outputs.base_url }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
           path: "dist"
       - name: Deploy to GitHub Pages
         id: deployment
