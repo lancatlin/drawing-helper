@@ -4,7 +4,7 @@ import { RootState } from "../../app/store";
 export const imageSlice = createSlice({
   name: "image",
   initialState: {
-    src: null as string | null,
+    src: "/leopard.jpg" as string | null,
   },
   reducers: {
     setImage: (state, action: { payload: string | null }) => {
