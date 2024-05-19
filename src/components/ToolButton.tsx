@@ -9,7 +9,10 @@ export default function ToolButton({
   onClick?: () => void;
 }) {
   return (
-    <button onClick={onClick} className="hover:scale-150">
+    <button
+      onClick={onClick}
+      className="hover:scale-150 transition duration-100"
+    >
       <FontAwesomeIcon icon={icon} />
     </button>
   );
