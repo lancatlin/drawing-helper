@@ -4,8 +4,8 @@ import { RootState } from "../../app/store";
 const gridSlice = createSlice({
   name: "grid",
   initialState: {
-    rows: 1,
-    cols: 1,
+    rows: 3,
+    cols: 3,
   },
   reducers: {
     setRows: (state, action: { payload: number }) => {
