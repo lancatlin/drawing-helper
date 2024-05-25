@@ -5,7 +5,7 @@ export default function GridPopup({ toggle }: { toggle: boolean }) {
   const dispatch = useDispatch();
   return (
     <div
-      className={`absolute bottom-20 left-1/2 -translate-x-1/2 bg-white opacity-90 rounded-lg p-5 transition duration-200 text-center ${
+      className={`absolute bottom-20 left-1/2 -translate-x-1/2 bg-white rounded-lg p-5 transition duration-200 text-center ${
         toggle ? "opacity-90" : "opacity-0"
       }`}
     >
