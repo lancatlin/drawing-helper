@@ -1,11 +1,7 @@
 import { useSelector } from "react-redux";
 import { selectViewport } from "../features/viewport/viewportSlice";
 import { selectGrid } from "../features/grid/gridSlice";
-import {
-  selectDimensions,
-  selectDisplayDimensions,
-  selectImage,
-} from "../features/image/imageSlice";
+import { selectDisplayDimensions } from "../features/image/imageSlice";
 
 export default function GridDisplay() {
   const viewport = useSelector(selectViewport);
