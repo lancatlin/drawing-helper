@@ -39,15 +39,19 @@ export default function ImageDisplay() {
       className="w-screen h-screen flex flex-col justify-center items-center overflow-hidden"
       onWheel={handleWheel}
     >
-      <div className="w-fit h-fit relative -z-10 border-2 border-green-500">
+      <div
+        className="relative -z-10 border-2 border-green-500"
+        style={{
+          width: displayDimensions.width,
+          height: displayDimensions.height,
+        }}
+      >
         {imageSrc ? (
           <>
             <img
               src={imageSrc}
               alt="image display"
               style={{
-                width: displayDimensions.width,
-                height: displayDimensions.height,
                 transform: `scale(${viewport.scale}) translate(${viewport.x}px, ${viewport.y}px)`,
               }}
               onLoad={imgOnLoad}
