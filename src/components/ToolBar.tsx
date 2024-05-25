@@ -7,9 +7,12 @@ import ToolButton from "./ToolButton";
 import ImageSelector from "./ImageSelector";
 import GridPopup from "./GridPopup";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { selectViewport } from "../features/viewport/viewportSlice";
 
 export default function ToolBar() {
   const [toggleGrid, setToggleGrid] = useState(true);
+  const viewport = useSelector(selectViewport);
   const onClick = () => {
     setToggleGrid(!toggleGrid);
   };
@@ -21,6 +24,7 @@ export default function ToolBar() {
         <ToolButton icon={faMagnifyingGlass} />
         <ToolButton icon={faBorderAll} onClick={onClick} />
         <ToolButton icon={faRuler} />
+        width: {viewport.width} height: {viewport.height}
       </div>
       <GridPopup toggle={toggleGrid} />
     </>

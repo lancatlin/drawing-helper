@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileImage } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
-import { setDimensions, setImage } from "../features/image/imageSlice";
+import { setImage } from "../features/image/imageSlice";
 
 export default function ImageSelector() {
   const dispatch = useDispatch();
@@ -11,14 +11,7 @@ export default function ImageSelector() {
       console.log(file);
       if (file) {
         const objectURL = window.URL.createObjectURL(file);
-        console.log(objectURL);
-        const newImage = new Image();
-        newImage.src = objectURL;
-        console.log(newImage);
-        dispatch(setImage(newImage.src));
-        dispatch(
-          setDimensions({ width: newImage.width, height: newImage.height })
-        );
+        dispatch(setImage(objectURL));
       }
     }
   };

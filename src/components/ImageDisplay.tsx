@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectImage, setDimensions } from "../features/image/imageSlice";
 import {
@@ -33,16 +33,15 @@ export default function ImageDisplay() {
   };
   return (
     <div
-      className="fixed top-0 left-0 w-full h-full -z-10"
+      className="fixed top-0 left-0 w-fit h-fit -z-10"
       onWheel={handleWheel}
       ref={screenElement}
     >
       {imageSrc ? (
         <>
           <img
-            src={imageSrc || ""}
+            src={imageSrc}
             alt="image display"
-            className="w-fit h-fit object-fit"
             style={{
               transform: `scale(${viewport.scale}) translate(${viewport.x}px, ${viewport.y}px)`,
             }}

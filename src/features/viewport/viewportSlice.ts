@@ -7,6 +7,8 @@ const viewportSlice = createSlice({
     scale: 1,
     x: 0,
     y: 0,
+    width: 0,
+    height: 0,
   },
   reducers: {
     setScale: (state, action: { payload: number }) => {
@@ -24,10 +26,18 @@ const viewportSlice = createSlice({
     setY: (state, action: { payload: number }) => {
       state.y = action.payload;
     },
+    setViewportDimensions: (
+      state,
+      action: { payload: { width: number; height: number } }
+    ) => {
+      state.width = action.payload.width;
+      state.height = action.payload.height;
+    },
   },
 });
 
-export const { setScale, zoomIn, zoomOut, setX, setY } = viewportSlice.actions;
+export const { setScale, zoomIn, zoomOut, setX, setY, setViewportDimensions } =
+  viewportSlice.actions;
 
 export const selectViewport = (state: RootState) => state.viewport;
 
