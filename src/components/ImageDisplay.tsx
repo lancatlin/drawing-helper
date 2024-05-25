@@ -1,6 +1,10 @@
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectImage, setDimensions } from "../features/image/imageSlice";
+import {
+  selectDisplayDimensions,
+  selectImage,
+  setDimensions,
+} from "../features/image/imageSlice";
 import {
   selectViewport,
   zoomIn,
@@ -11,7 +15,7 @@ import GridDisplay from "./GridDisplay";
 export default function ImageDisplay() {
   const imageSrc = useSelector(selectImage);
   const viewport = useSelector(selectViewport);
-  const screenElement = useRef<HTMLDivElement>(null);
+  const displayDimensions = useSelector(selectDisplayDimensions);
   const dispatch = useDispatch();
 
   const handleWheel = (e: React.WheelEvent) => {
@@ -33,9 +37,8 @@ export default function ImageDisplay() {
   };
   return (
     <div
-      className="fixed top-0 left-0 w-fit h-fit -z-10"
+      className="w-fit h-fit relative mx-auto -z-10 border-2 border-green-500"
       onWheel={handleWheel}
-      ref={screenElement}
     >
       {imageSrc ? (
         <>
@@ -43,6 +46,8 @@ export default function ImageDisplay() {
             src={imageSrc}
             alt="image display"
             style={{
+              width: displayDimensions.width,
+              height: displayDimensions.height,
               transform: `scale(${viewport.scale}) translate(${viewport.x}px, ${viewport.y}px)`,
             }}
             onLoad={imgOnLoad}

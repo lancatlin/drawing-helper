@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
+import { selectViewport } from "../viewport/viewportSlice";
 
 export const imageSlice = createSlice({
   name: "image",
@@ -29,5 +30,24 @@ export const selectDimensions = (state: RootState) => ({
   width: state.image.width,
   height: state.image.height,
 });
+
+export const selectDisplayDimensions = (state: RootState) => {
+  const { width, height } = selectDimensions(state);
+  const { width: viewportWidth, height: viewportHeight } =
+    selectViewport(state);
+  let containSize = { width, height };
+
+  if (width > 0 && height > 0) {
+    const widthRatio = viewportWidth / width;
+    const heightRatio = viewportHeight / height;
+    const minRatio = Math.min(widthRatio, heightRatio);
+
+    containSize = {
+      width: width * minRatio,
+      height: height * minRatio,
+    };
+  }
+  return containSize;
+};
 
 export default imageSlice.reducer;
