@@ -21,18 +21,16 @@ export default function ImageDisplay() {
       dispatch(zoomOut(e.deltaY));
     }
   };
-  useEffect(() => {
-    console.log(screenElement.current);
-    const elem = screenElement.current;
-    if (elem) {
-      dispatch(
-        setDimensions({
-          width: elem.clientWidth,
-          height: elem.clientHeight,
-        })
-      );
-    }
-  }, [screenElement.current]);
+  const imgOnLoad = (e: React.SyntheticEvent) => {
+    console.log(e.target);
+    const elem = e.target as HTMLImageElement;
+    dispatch(
+      setDimensions({
+        width: elem.naturalWidth,
+        height: elem.naturalHeight,
+      })
+    );
+  };
   return (
     <div
       className="fixed top-0 left-0 w-full h-full -z-10"
@@ -44,10 +42,11 @@ export default function ImageDisplay() {
           <img
             src={imageSrc || ""}
             alt="image display"
-            className="w-full h-full object-contain"
+            className="w-fit h-fit object-fit"
             style={{
               transform: `scale(${viewport.scale}) translate(${viewport.x}px, ${viewport.y}px)`,
             }}
+            onLoad={imgOnLoad}
           />
           <GridDisplay />
         </>
