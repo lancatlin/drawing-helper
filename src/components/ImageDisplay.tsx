@@ -37,28 +37,30 @@ export default function ImageDisplay() {
   };
   return (
     <div
-      className="w-fit h-fit relative mx-auto -z-10 border-2 border-green-500"
+      className="w-screen h-screen flex flex-col justify-center items-center overflow-hidden"
       onWheel={handleWheel}
     >
-      {imageSrc ? (
-        <>
-          <img
-            src={imageSrc}
-            alt="image display"
-            style={{
-              width: displayDimensions.width,
-              height: displayDimensions.height,
-              transform: `scale(${viewport.scale}) translate(${viewport.x}px, ${viewport.y}px)`,
-            }}
-            onLoad={imgOnLoad}
-          />
-          <GridDisplay />
-        </>
-      ) : (
-        <div className="w-full h-full flex items-center justify-center">
-          <p className="text-2xl">No image selected. Open one to view it.</p>
-        </div>
-      )}
+      <div className="w-fit h-fit relative -z-10 border-2 border-green-500">
+        {imageSrc ? (
+          <>
+            <img
+              src={imageSrc}
+              alt="image display"
+              style={{
+                width: displayDimensions.width,
+                height: displayDimensions.height,
+                transform: `scale(${viewport.scale}) translate(${viewport.x}px, ${viewport.y}px)`,
+              }}
+              onLoad={imgOnLoad}
+            />
+            <GridDisplay />
+          </>
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <p className="text-2xl">No image selected. Open one to view it.</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
