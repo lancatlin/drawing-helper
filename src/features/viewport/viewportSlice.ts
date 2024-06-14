@@ -14,17 +14,24 @@ const viewportSlice = createSlice({
     setScale: (state, action: { payload: number }) => {
       state.scale = action.payload;
     },
-    zoomIn: (state, action: { payload: number }) => {
-      state.scale = Math.min(10, state.scale * (1 - action.payload / 500));
+    zoom: (
+      state,
+      action: { payload: { x: number; y: number; delta: number } }
+    ) => {
+      // state.scale = Math.min(
+      //   10,
+      //   state.scale * (1 - action.payload.amount / 500)
+      // );
+      const xs = (action.payload.x - state.x) / state.scale;
+      const ys = (action.payload.y - state.y) / state.scale;
+      const scale = state.scale * (1 - action.payload.delta / 500);
+      state.scale = scale;
+      state.x = action.payload.x - xs * scale;
+      state.y = action.payload.y - ys * scale;
     },
-    zoomOut: (state, action: { payload: number }) => {
-      state.scale = Math.max(1, state.scale * (1 - action.payload / 500));
-    },
-    setX: (state, action: { payload: number }) => {
-      state.x = action.payload;
-    },
-    setY: (state, action: { payload: number }) => {
-      state.y = action.payload;
+    setTranslation: (state, action: { payload: { x: number; y: number } }) => {
+      state.x = action.payload.x;
+      state.y = action.payload.y;
     },
     setViewportDimensions: (
       state,
@@ -36,7 +43,7 @@ const viewportSlice = createSlice({
   },
 });
 
-export const { setScale, zoomIn, zoomOut, setX, setY, setViewportDimensions } =
+export const { setScale, zoom, setTranslation, setViewportDimensions } =
   viewportSlice.actions;
 
 export const selectViewport = (state: RootState) => state.viewport;

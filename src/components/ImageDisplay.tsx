@@ -1,14 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 import {
   selectDisplayDimensions,
   selectImage,
   setDimensions,
 } from "../features/image/imageSlice";
-import {
-  selectViewport,
-  zoomIn,
-  zoomOut,
-} from "../features/viewport/viewportSlice";
+import { selectViewport, zoom } from "../features/viewport/viewportSlice";
 import GridDisplay from "./GridDisplay";
 
 export default function ImageDisplay() {
@@ -16,13 +13,10 @@ export default function ImageDisplay() {
   const viewport = useSelector(selectViewport);
   const displayDimensions = useSelector(selectDisplayDimensions);
   const dispatch = useDispatch();
+  const [isDragging, setIsDragging] = useState(false);
 
   const handleWheel = (e: React.WheelEvent) => {
-    if (e.deltaY < 0) {
-      dispatch(zoomIn(e.deltaY));
-    } else {
-      dispatch(zoomOut(e.deltaY));
-    }
+    dispatch(zoom({ x: e.clientX, y: e.clientY, delta: e.deltaY }));
   };
   const imgOnLoad = (e: React.SyntheticEvent) => {
     console.log(e.target);
@@ -36,34 +30,31 @@ export default function ImageDisplay() {
   };
   return (
     <div
-      className="w-screen h-screen flex flex-col justify-center items-center overflow-hidden"
+      className="fixed top-0 left-0 border-2 border-green-500"
+      style={{
+        width: displayDimensions.width,
+        height: displayDimensions.height,
+        transformOrigin: "0 0",
+        transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.scale})`,
+      }}
       onWheel={handleWheel}
+      onClick={() => console.log("clicked image")}
+      onMouseDown={(ev) => {
+        setIsDragging(true);
+        console.log("mouse down", ev);
+      }}
+      onMouseUp={(ev) => {
+        setIsDragging(false);
+        console.log("mouse up", ev);
+      }}
+      onMouseMove={(ev) => {
+        if (isDragging) {
+          console.log("mouse move", ev);
+        }
+      }}
     >
-      <div
-        className="relative -z-10 border-2 border-green-500"
-        style={{
-          width: displayDimensions.width,
-          height: displayDimensions.height,
-        }}
-      >
-        {imageSrc ? (
-          <>
-            <img
-              src={imageSrc}
-              alt="image display"
-              style={{
-                transform: `scale(${viewport.scale}) translate(${viewport.x}px, ${viewport.y}px)`,
-              }}
-              onLoad={imgOnLoad}
-            />
-            <GridDisplay />
-          </>
-        ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <p className="text-2xl">No image selected. Open one to view it.</p>
-          </div>
-        )}
-      </div>
+      <img src={imageSrc ?? ""} alt="image display" onLoad={imgOnLoad} />
+      <GridDisplay />
     </div>
   );
 }
