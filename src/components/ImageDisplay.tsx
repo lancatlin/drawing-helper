@@ -56,6 +56,7 @@ export default function ImageDisplay() {
   };
   return (
     <div
+      className="fixed top-0 left-0"
       style={{
         width: displayDimensions.width,
         height: displayDimensions.height,
